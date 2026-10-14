@@ -1,0 +1,123 @@
+<!-- Declara que es HTML5 -->
+<!DOCTYPE html>
+<!-- Elemento raiz con idioma español -->
+<html lang="es">
+<!-- Cabecera del documento -->
+<head>
+    <!-- Codificacion de caracteres UTF-8 -->
+    <meta charset="UTF-8">
+    <!-- Viewport para dispositivos moviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titulo de la pestaña del navegador -->
+    <title>Calculadora Basica</title>
+    <!-- Enlaza la hoja de estilos externa -->
+    <link rel="stylesheet" href="/styles/style.css">
+    <!-- Carga la libreria Axios desde el CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Cierra head -->
+</head>
+<!-- Cuerpo visible de la pagina -->
+<body>
+
+    <!-- Encabezado de la pagina -->
+    <header class="header">
+        <!-- Titulo principal -->
+        <h1 class="header-titulo">Calculadora Basica</h1>
+        <!-- Boton para alternar tema -->
+        <button id="btn-tema" class="btn-tema">Modo Claro</button>
+    </header>
+
+    <!-- Contenedor para notificaciones flotantes -->
+    <div id="notificacion" class="notificacion"></div>
+
+    <!-- Contenedor principal con 2 columnas -->
+    <main class="contenedor">
+
+        <!-- SECCION CALCULADORA -->
+        <section class="panel panel-calculadora">
+
+            <!-- Pantalla de la calculadora -->
+            <div class="pantalla">
+                <!-- Muestra la operacion actual -->
+                <div id="operacion-display" class="operacion-display">0</div>
+                <!-- Muestra el resultado -->
+                <div id="resultado-display" class="resultado-display">= 0</div>
+            </div>
+
+            <!-- Teclado de botones -->
+            <div class="teclado">
+
+                <!-- Boton C (limpiar) -->
+                <button class="tecla tecla-funcion" data-accion="limpiar">C</button>
+                <!-- Boton borrar ultimo -->
+                <button class="tecla tecla-funcion" data-accion="borrar">←</button>
+                <!-- Boton modulo -->
+                <button class="tecla tecla-operador" data-operador="%">%</button>
+                <!-- Boton division -->
+                <button class="tecla tecla-operador" data-operador="/">÷</button>
+
+                <!-- Boton 7 -->
+                <button class="tecla" data-numero="7">7</button>
+                <!-- Boton 8 -->
+                <button class="tecla" data-numero="8">8</button>
+                <!-- Boton 9 -->
+                <button class="tecla" data-numero="9">9</button>
+                <!-- Boton multiplicacion -->
+                <button class="tecla tecla-operador" data-operador="*">×</button>
+
+                <!-- Boton 4 -->
+                <button class="tecla" data-numero="4">4</button>
+                <!-- Boton 5 -->
+                <button class="tecla" data-numero="5">5</button>
+                <!-- Boton 6 -->
+                <button class="tecla" data-numero="6">6</button>
+                <!-- Boton resta -->
+                <button class="tecla tecla-operador" data-operador="-">−</button>
+
+                <!-- Boton 1 -->
+                <button class="tecla" data-numero="1">1</button>
+                <!-- Boton 2 -->
+                <button class="tecla" data-numero="2">2</button>
+                <!-- Boton 3 -->
+                <button class="tecla" data-numero="3">3</button>
+                <!-- Boton suma -->
+                <button class="tecla tecla-operador" data-operador="+">+</button>
+
+                <!-- Boton 0 (ocupa 2 columnas) -->
+                <button class="tecla tecla-cero" data-numero="0">0</button>
+                <!-- Boton punto decimal -->
+                <button class="tecla" data-accion="punto">.</button>
+                <!-- Boton igual -->
+                <button class="tecla tecla-igual" data-accion="calcular">=</button>
+
+            </div>
+
+        </section>
+
+        <!-- SECCION HISTORIAL -->
+        <section class="panel panel-historial">
+
+            <!-- Encabezado con titulo y boton limpiar -->
+            <div class="historial-header">
+                <!-- Titulo -->
+                <h2 class="panel-titulo">Historial</h2>
+                <!-- Boton limpiar todo -->
+                <button id="btn-limpiar-historial" class="btn-limpiar">Limpiar todo</button>
+            </div>
+
+            <!-- Contenedor de estadisticas -->
+            <div id="estadisticas" class="estadisticas"></div>
+
+            <!-- Lista de operaciones -->
+            <div id="lista-historial" class="lista-historial"></div>
+
+        </section>
+
+    </main>
+
+    <!-- Script principal como modulo ES6 -->
+    <script type="module" src="/scripts/app.js"></script>
+<!-- Cierra body -->
+</body>
+<!-- Cierra html -->
+</html>

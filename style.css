@@ -1,0 +1,696 @@
+/* ============================================================
+   ESTILOS - CALCULADORA BASICA
+   ============================================================
+   Modo claro/oscuro. Responsive para celular.
+   Diseño compacto para que todo entre en pantalla.
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================================================
+   VARIABLES - MODO OSCURO (por defecto)
+   ============================================================ */
+:root {
+    --bg-body: #0a0a0a;
+    --bg-header: #000000;
+    --bg-panel: #1a1a1a;
+    --bg-pantalla: #0f0f0f;
+    --bg-tecla: #2a2a2a;
+    --bg-tecla-hover: #3a3a3a;
+    --bg-tecla-funcion: #333333;
+    --bg-tecla-funcion-hover: #454545;
+    --bg-tecla-operador: #4a4a4a;
+    --bg-tecla-operador-hover: #5a5a5a;
+    --bg-tecla-igual: #ffffff;
+    --bg-tecla-igual-hover: #e0e0e0;
+    --bg-card: #1f1f1f;
+    --texto: #ffffff;
+    --texto-sec: #a0a0a0;
+    --texto-tecla-igual: #000000;
+    --borde: #2a2a2a;
+    --exito: #16a34a;
+    --error: #dc2626;
+    --sombra-tecla: rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================
+   VARIABLES - MODO CLARO
+   ============================================================ */
+body.claro {
+    --bg-body: #f0f0f0;
+    --bg-header: #ffffff;
+    --bg-panel: #ffffff;
+    --bg-pantalla: #f0f0f0;
+    --bg-tecla: #ffffff;
+    --bg-tecla-hover: #f5f5f5;
+    --bg-tecla-funcion: #e0e0e0;
+    --bg-tecla-funcion-hover: #d0d0d0;
+    --bg-tecla-operador: #c8c8c8;
+    --bg-tecla-operador-hover: #b8b8b8;
+    --bg-tecla-igual: #000000;
+    --bg-tecla-igual-hover: #333333;
+    --bg-card: #f9f9f9;
+    --texto: #000000;
+    --texto-sec: #666666;
+    --texto-tecla-igual: #ffffff;
+    --borde: #d0d0d0;
+    --sombra-tecla: rgba(0, 0, 0, 0.08);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-body);
+    color: var(--texto);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s ease, color 0.3s ease;
+    overflow: hidden;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.header {
+    background: var(--bg-header);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--borde);
+    flex-shrink: 0;
+    gap: 10px;
+}
+
+.header-titulo {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.btn-tema {
+    background: transparent;
+    color: var(--texto);
+    border: 1px solid var(--borde);
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.btn-tema:hover {
+    background: var(--bg-panel);
+}
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL - 2 COLUMNAS
+   ============================================================ */
+.contenedor {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 15px;
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* ============================================================
+   CALCULADORA COMPACTA
+   ============================================================ */
+.panel-calculadora {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Pantalla */
+.pantalla {
+    background: var(--bg-pantalla);
+    border: 2px solid var(--borde);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    text-align: right;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.operacion-display {
+    font-size: 1rem;
+    color: var(--texto-sec);
+    font-family: 'Courier New', monospace;
+    min-height: 20px;
+    word-wrap: break-word;
+    letter-spacing: 1px;
+}
+
+.resultado-display {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--texto);
+    font-family: 'Courier New', monospace;
+    min-height: 40px;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+/* Teclado */
+.teclado {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* Teclas base */
+.tecla {
+    background: var(--bg-tecla);
+    color: var(--texto);
+    border: 1px solid var(--borde);
+    padding: 0;
+    height: 60px;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 0 var(--borde), 0 3px 6px var(--sombra-tecla);
+}
+
+.tecla:hover {
+    background: var(--bg-tecla-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 0 var(--borde), 0 5px 10px var(--sombra-tecla);
+}
+
+.tecla:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--borde);
+}
+
+.tecla-funcion {
+    background: var(--bg-tecla-funcion);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.tecla-funcion:hover {
+    background: var(--bg-tecla-funcion-hover);
+}
+
+.tecla-operador {
+    background: var(--bg-tecla-operador);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.tecla-operador:hover {
+    background: var(--bg-tecla-operador-hover);
+}
+
+.tecla-igual {
+    background: var(--bg-tecla-igual);
+    color: var(--texto-tecla-igual);
+    font-weight: 700;
+    font-size: 1.5rem;
+    height: 60px;
+}
+
+.tecla-igual:hover {
+    background: var(--bg-tecla-igual-hover);
+}
+
+.tecla-cero {
+    grid-column: span 2;
+}
+
+/* ============================================================
+   HISTORIAL
+   ============================================================ */
+.historial-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--borde);
+    flex-wrap: wrap;
+}
+
+.panel-titulo {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.btn-limpiar {
+    background: transparent;
+    color: var(--texto);
+    border: 1px solid var(--borde);
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-limpiar:hover {
+    background: var(--error);
+    color: #ffffff;
+    border-color: var(--error);
+}
+
+.estadisticas {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+}
+
+.stat {
+    background: var(--bg-pantalla);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 8px 4px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.stat:hover {
+    transform: translateY(-2px);
+    border-color: var(--texto-sec);
+}
+
+.stat-num {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.stat-label {
+    font-size: 0.55rem;
+    color: var(--texto-sec);
+    text-transform: uppercase;
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+}
+
+.lista-historial {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+}
+
+.historial-vacio {
+    text-align: center;
+    padding: 30px 15px;
+    color: var(--texto-sec);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.item-historial {
+    background: var(--bg-card);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    animation: aparecer 0.3s ease;
+}
+
+.item-historial:hover {
+    transform: translateX(4px);
+    border-color: var(--texto-sec);
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.item-expresion {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: var(--texto-sec);
+}
+
+.item-resultado {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.item-fecha {
+    font-size: 0.65rem;
+    color: var(--texto-sec);
+}
+
+.btn-eliminar-item {
+    background: transparent;
+    color: var(--texto-sec);
+    border: 1px solid var(--borde);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-eliminar-item:hover {
+    background: var(--error);
+    color: #ffffff;
+    border-color: var(--error);
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================
+   NOTIFICACION
+   ============================================================ */
+.notificacion {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    max-width: 90%;
+}
+
+.notificacion.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notificacion.exito {
+    background: var(--exito);
+    color: #ffffff;
+}
+
+.notificacion.error {
+    background: var(--error);
+    color: #ffffff;
+}
+
+.notificacion.info {
+    background: #0284c7;
+    color: #ffffff;
+}
+
+/* ============================================================
+   RESPONSIVE - TABLET
+   ============================================================ */
+@media (max-width: 1024px) {
+    .contenedor {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+    }
+
+    body {
+        overflow-y: auto;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE - CELULAR
+   ============================================================ */
+@media (max-width: 768px) {
+
+    body {
+        overflow-y: auto;
+    }
+
+    .header {
+        padding: 10px 15px;
+    }
+
+    .header-titulo {
+        font-size: 1.05rem;
+    }
+
+    .btn-tema {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+
+    .contenedor {
+        padding: 10px;
+        gap: 10px;
+        overflow-y: auto;
+        min-height: auto;
+    }
+
+    .panel {
+        padding: 15px;
+        gap: 12px;
+        border-radius: 12px;
+        overflow-y: visible;
+    }
+
+    .pantalla {
+        padding: 12px 15px;
+        margin-bottom: 12px;
+        min-height: 80px;
+        border-radius: 10px;
+    }
+
+    .operacion-display {
+        font-size: 0.9rem;
+        min-height: 18px;
+    }
+
+    .resultado-display {
+        font-size: 1.8rem;
+        min-height: 35px;
+    }
+
+    .teclado {
+        gap: 8px;
+    }
+
+    .tecla {
+        height: 55px;
+        font-size: 1.2rem;
+        border-radius: 10px;
+    }
+
+    .tecla-funcion {
+        font-size: 1rem;
+    }
+
+    .tecla-operador {
+        font-size: 1.3rem;
+    }
+
+    .tecla-igual {
+        font-size: 1.4rem;
+        height: 55px;
+    }
+
+    .panel-titulo {
+        font-size: 1rem;
+    }
+
+    .btn-limpiar {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+    }
+
+    .estadisticas {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+    }
+
+    .stat {
+        padding: 6px 3px;
+        border-radius: 6px;
+    }
+
+    .stat-num {
+        font-size: 0.95rem;
+    }
+
+    .stat-label {
+        font-size: 0.5rem;
+    }
+
+    .item-historial {
+        padding: 8px 10px;
+    }
+
+    .item-expresion {
+        font-size: 0.75rem;
+    }
+
+    .item-resultado {
+        font-size: 0.95rem;
+    }
+
+    .item-fecha {
+        font-size: 0.6rem;
+    }
+
+    .btn-eliminar-item {
+        width: 26px;
+        height: 26px;
+        font-size: 0.75rem;
+    }
+
+    .notificacion {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE - CELULAR PEQUEÑO
+   ============================================================ */
+@media (max-width: 400px) {
+
+    .header-titulo {
+        font-size: 0.95rem;
+    }
+
+    .btn-tema {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+    }
+
+    .contenedor {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .panel {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .pantalla {
+        padding: 10px 12px;
+        min-height: 75px;
+    }
+
+    .operacion-display {
+        font-size: 0.85rem;
+    }
+
+    .resultado-display {
+        font-size: 1.6rem;
+    }
+
+    .teclado {
+        gap: 6px;
+    }
+
+    .tecla {
+        height: 50px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+    }
+
+    .tecla-funcion {
+        font-size: 0.95rem;
+    }
+
+    .tecla-operador {
+        font-size: 1.2rem;
+    }
+
+    .tecla-igual {
+        font-size: 1.3rem;
+        height: 50px;
+    }
+
+    .estadisticas {
+        gap: 3px;
+    }
+
+    .stat {
+        padding: 5px 2px;
+    }
+
+    .stat-num {
+        font-size: 0.85rem;
+    }
+
+    .stat-label {
+        font-size: 0.45rem;
+    }
+}
+/* ============================================================
+   AJUSTE PARA EL BOTON % EN LA PRIMERA FILA
+   ============================================================ */
+.tecla-operador[data-operador="%"] {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
